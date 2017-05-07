@@ -7,15 +7,12 @@
 import React, {Component} from 'react';
 import {
     AppRegistry,
-    StyleSheet,
-    View,
-    Text,
-    TouchableOpacity,
-    ToastAndroid,
-    Navigator
 } from 'react-native';
 import MainScreen from "./app/MainScreen"
 import UserScreen from "./app/UserScreen"
+import ConfigManagerInfoScreen from "./app/ConfigManagerInfoScreen"
+import ConfigUserInfoScreen from "./app/ConfigUserInfoScreen"
+
 
 import {
     StackNavigator,
@@ -24,7 +21,9 @@ import {
 const App = StackNavigator({
     Main: {screen: MainScreen},
     User: {screen: UserScreen},
-});
+    ConfigManagerInfo: {screen: ConfigManagerInfoScreen},
+    ConfigUserInfo: {screen: ConfigUserInfoScreen},
 
+});
 
 AppRegistry.registerComponent('TrackSourceSys', () => App);
