@@ -11,51 +11,20 @@ import {
     View,
     Text,
     TouchableOpacity,
-    ToastAndroid
+    ToastAndroid,
+    Navigator
 } from 'react-native';
+import MainScreen from "./app/MainScreen"
+import UserScreen from "./app/UserScreen"
 
-export default class TrackSourceSys extends Component {
-    showInfo(msg) {
-        ToastAndroid.showWithGravity(msg, ToastAndroid.SHORT, ToastAndroid.CENTER);
-    }
+import {
+    StackNavigator,
+} from 'react-navigation';
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <TouchableOpacity
-                    onPress={() => this.showInfo("我是普通用户")}
-                    >
-                    <View  style={styles.buttonStyle}>
-                        <Text>我是普通用户</Text>
-                    </View>
-
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => this.showInfo("我是管理员")}
-                >
-                    <View style={[styles.buttonStyle, {marginTop:10}]}>
-                        <Text>我是管理员</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
-        );
-    }
-}
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    },
-    buttonStyle: {
-        backgroundColor:"#35F3CF",
-        alignItems:"center",
-        justifyContent:"center",
-        width:160,
-        padding:10
-    }
+const App = StackNavigator({
+    Main: {screen: MainScreen},
+    User: {screen: UserScreen},
 });
 
-AppRegistry.registerComponent('TrackSourceSys', () => TrackSourceSys);
+
+AppRegistry.registerComponent('TrackSourceSys', () => App);
