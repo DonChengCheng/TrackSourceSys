@@ -39,13 +39,11 @@ public class ScannerModule extends ReactContextBaseJavaModule {
         public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent intent) {
             if (requestCode == SCANNER_REQUEST) {
                 if (mScannerPromise != null && resultCode == Activity.RESULT_OK) {
-                    if (resultCode == Activity.RESULT_CANCELED) {
-                        String contents = intent.getStringExtra("SCAN_RESULT");
-                        if (contents == null) {
-                            mScannerPromise.reject(E_NO_DATA_FOUND, "No content data found");
-                        } else {
-                            mScannerPromise.resolve(contents);
-                        }
+                    String contents = intent.getStringExtra("SCAN_RESULT");
+                    if (contents == null) {
+                        mScannerPromise.reject(E_NO_DATA_FOUND, "No content data found");
+                    } else {
+                        mScannerPromise.resolve(contents);
                     }
                     mScannerPromise = null;
                 }
@@ -67,7 +65,7 @@ public class ScannerModule extends ReactContextBaseJavaModule {
             Intent intent = new Intent(currentActivity, CaptureActivity.class);
             intent.setAction("com.google.zxing.client.android.SCAN");
             intent.putExtra("SAVE_HISTORY", false);
-            currentActivity.startActivityForResult(intent, 0);
+            currentActivity.startActivityForResult(intent, SCANNER_REQUEST);
         } catch (Exception e) {
             mScannerPromise.reject(E_FAILED_TO_OPEN_SCANNER, e);
             mScannerPromise = null;
