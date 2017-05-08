@@ -11,12 +11,13 @@ export default class ConfigUserInfoScreen extends Component {
     render() {
         return (<View style={styles.container}>
             <View style={styles.itemStyle}>
-                <Text>姓名</Text>
-                <TextInput></TextInput>
+                <Text style={{width:60, textAlign: 'right'}}>姓名</Text>
+                <TextInput style={{flex:1}}></TextInput>
             </View>
 
             <View style={styles.itemStyle}>
-                <Picker
+                <Text style={{width:60, textAlign: 'right'}}>职位</Text>
+                <Picker style={{flex:1}}
                     selectedValue={this.state.language}
                     onValueChange={(lang) => this.setState({language: lang})}>
                     <Picker.Item label="用户" value="用户" />
@@ -38,6 +39,8 @@ const styles = StyleSheet.create({
     },
 
     itemStyle:{
-        flexDirection:"row"
+        flexDirection:"row",
+        alignItems:"center"
+
     }
 });
