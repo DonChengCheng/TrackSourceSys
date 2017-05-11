@@ -4,7 +4,7 @@
  * @flow
  */
 
-import React, {Component} from 'react';
+import React from 'react';
 import {
     AppRegistry,
 } from 'react-native';
@@ -15,7 +15,6 @@ import ConfigManagerInfoScreen from "./app/ConfigManagerInfoScreen"
 import ConfigUserInfoScreen from "./app/ConfigUserInfoScreen"
 
 import {
-
     StackNavigator,
 } from 'react-navigation';
 
