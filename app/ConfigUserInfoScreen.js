@@ -8,6 +8,9 @@ export default class ConfigUserInfoScreen extends Component {
     state= {
         language:"用户"
     }
+    static navigationOptions = {
+        title: '添加职员信息'
+    };
     render() {
         return (<View style={styles.container}>
             <View style={styles.itemStyle}>
@@ -20,9 +23,10 @@ export default class ConfigUserInfoScreen extends Component {
                 <Picker style={{flex:1}}
                     selectedValue={this.state.language}
                     onValueChange={(lang) => this.setState({language: lang})}>
-                    <Picker.Item label="用户" value="用户" />
+                    <Picker.Item label="出货员" value="出货员" />
                     <Picker.Item label="质检员" value="质检员" />
                     <Picker.Item label="销售员" value="销售员" />
+                    <Picker.Item label="用户" value="用户" />
                 </Picker>
             </View>
             <View>

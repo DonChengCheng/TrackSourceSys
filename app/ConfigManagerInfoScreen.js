@@ -1,14 +1,13 @@
 /**
- * Created by hasee on 2017/5/7.
- */
-/**
- * Created by hasee on 2017/5/7.
+ * Created by Allen on 2017/5/7.
  */
 import React, {Component} from "react"
 import {View, Text, TextInput, StyleSheet} from "react-native"
 
 export default class ConfigManagerInfoScreen extends Component {
-
+    static navigationOptions = {
+        title: '配置管理员信息'
+    };
     render() {
         return (<View style={styles.container}>
             <View style={styles.itemStyle}>

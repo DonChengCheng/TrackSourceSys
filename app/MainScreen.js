@@ -10,25 +10,29 @@ import {
 } from 'react-native';
 
 export default class MainScreen extends Component {
+    static navigationOptions = {
+        title: '溯源系统'
+    };
     render() {
         const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
                 <TouchableOpacity
-                    onPress={() => navigate('User')}
-                >
-                    <View  style={styles.buttonStyle}>
-                        <Text>我是普通用户</Text>
-                    </View>
-
-                </TouchableOpacity>
-                <TouchableOpacity
                     onPress={() => navigate('Manager')}
                 >
-                    <View style={[styles.buttonStyle, {marginTop:10}]}>
+                    <View style={styles.buttonStyle}>
                         <Text>我是管理员</Text>
                     </View>
                 </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => navigate('User')}
+                >
+                    <View  style={[styles.buttonStyle, {marginTop:10}]}>
+                        <Text>我是职员</Text>
+                    </View>
+
+                </TouchableOpacity>
+
             </View>
         );
     }

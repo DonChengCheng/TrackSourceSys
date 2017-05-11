@@ -7,6 +7,9 @@ import {View, Button, ToastAndroid, StyleSheet} from "react-native"
 import ScannerModule from "../CommonNativeModule"
 
 export default class UserScreen extends Component {
+    static navigationOptions = {
+        title: '我是职员'
+    };
     render() {
         return (<View style={styles.container}>
             <Button title="扫一扫" onPress={() => ScannerModule.scannerErcode().then((result) => {
@@ -14,6 +17,7 @@ export default class UserScreen extends Component {
             }, (code, message) => {
                 ToastAndroid.show(message, ToastAndroid.LONG)
             })}/>
+
         </View>)
     }
 }
@@ -21,7 +25,6 @@ export default class UserScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center"
+        justifyContent:"center"
     }
 })
