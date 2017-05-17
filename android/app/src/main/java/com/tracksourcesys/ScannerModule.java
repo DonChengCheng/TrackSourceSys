@@ -10,7 +10,10 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.android.CaptureActivity;
+import com.google.zxing.client.android.Contents;
+import com.google.zxing.client.android.Intents;
 
 /**
  * Created by hasee on 2017/5/5.
@@ -70,6 +73,22 @@ public class ScannerModule extends ReactContextBaseJavaModule {
             mScannerPromise.reject(E_FAILED_TO_OPEN_SCANNER, e);
             mScannerPromise = null;
         }
+    }
+
+    @ReactMethod
+    public void generateErcode(String info) {
+        Activity currentActivity = getCurrentActivity();
+
+        if (currentActivity == null) {
+            return;
+        }
+        Intent intent = new Intent(Intents.Encode.ACTION);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        intent.putExtra(Intents.Encode.TYPE, Contents.Type.TEXT);
+        intent.putExtra(Intents.Encode.DATA, info);
+        intent.putExtra(Intents.Encode.FORMAT, BarcodeFormat.QR_CODE.toString());
+        currentActivity.startActivity(intent);
+
     }
 
 }
