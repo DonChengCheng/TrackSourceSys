@@ -29,7 +29,7 @@ export default class ConfigUserInfoScreen extends Component {
                     <Picker.Item label="用户" value="用户" />
                 </Picker>
             </View>
-            <View>
+            <View style={{margin: 10}}>
                 <Button title={"添加"}></Button>
             </View>
         </View>);

@@ -5,8 +5,7 @@ import React, {Component} from 'react';
 import {
     StyleSheet,
     View,
-    Text,
-    TouchableOpacity,
+    Button
 } from 'react-native';
 
 export default class MainScreen extends Component {
@@ -17,21 +16,20 @@ export default class MainScreen extends Component {
         const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
-                <TouchableOpacity
-                    onPress={() => navigate('Manager')}
-                >
-                    <View style={styles.buttonStyle}>
-                        <Text>我是管理员</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => navigate('User')}
-                >
-                    <View  style={[styles.buttonStyle, {marginTop:10}]}>
-                        <Text>我是职员</Text>
-                    </View>
+                <View style={{margin:40}}>
+                    <Button
+                        onPress={() => navigate('Manager')}
+                        title={"我是管理员"}
+                    >
+                    </Button>
+                </View>
 
-                </TouchableOpacity>
+                <View style={{margin:40}}>
+                    <Button
+                        onPress={() => navigate('User')}
+                        title={"我是职员"}>
+                    </Button>
+                </View>
 
             </View>
         );
@@ -42,14 +40,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#F5FCFF',
     },
-    buttonStyle: {
-        backgroundColor:"#35F3CF",
-        alignItems:"center",
-        justifyContent:"center",
-        width:160,
-        padding:10
-    }
 });
