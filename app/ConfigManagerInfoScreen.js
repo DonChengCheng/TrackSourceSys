@@ -4,6 +4,7 @@
 import React, {Component} from "react"
 import {View, Text, TextInput, StyleSheet, ToastAndroid, Button} from "react-native"
 import ScannerModule from "../CommonNativeModule"
+import AppStorage from "./AppStorage"
 
 export default class ConfigManagerInfoScreen extends Component {
     static navigationOptions = {
@@ -16,7 +17,45 @@ export default class ConfigManagerInfoScreen extends Component {
         managerId: ""
     }
 
-
+    submitInfo() {
+        ScannerModule.scannerErcode().then((result) => {
+            let content = [{"name": "姓名", "value": this.state.username}, {
+                "name": "性别",
+                "value": this.state.sex
+            },
+                {"name": "电话号码", "value": this.state.mobile}]
+            let id = "";
+            if (result != "") {
+                let index = result.indexOf("=", 0);
+                if (index != -1) {
+                    id = result.slice(index + 1, result.length)
+                }
+                AppStorage.setManagerId(id)
+            }
+            fetch('http://dm.trtos.com/php/json.php', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: "add",
+                    id: id,
+                    content: content
+                })
+            })
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    ToastAndroid.show(responseJson.status, ToastAndroid.LONG)
+                })
+                .catch((error) => {
+                    ToastAndroid.show(error.toString(), ToastAndroid.LONG)
+                    console.error(error);
+                });
+        }, (code, message) => {
+            ToastAndroid.show(message, ToastAndroid.LONG)
+        })
+    }
     render() {
         return (<View style={styles.container}>
             <View style={styles.itemStyle}>
@@ -32,43 +71,7 @@ export default class ConfigManagerInfoScreen extends Component {
                 <TextInput onChangeText={(text) => this.setState({mobile: text})} style={{flex: 1}}></TextInput>
             </View>
             <View style={{margin: 10}}>
-                <Button title="扫一扫提交" onPress={() => ScannerModule.scannerErcode().then((result) => {
-
-                    let content = [{"name": "姓名", "value": this.state.username}, {
-                        "name": "性别",
-                        "value": this.state.sex
-                    },
-                        {"name": "电话号码", "value": this.state.mobile}]
-                    let id = "";
-                    if (result != "") {
-                        let index = result.indexOf("=", 0);
-                        if (index != -1) {
-                            id = result.slice(index + 1, result.length)
-                        }
-                    }
-                    fetch('http://dm.trtos.com/php/json.php', {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            action: "add",
-                            id: id,
-                            content: content
-                        })
-                    })
-                        .then((response) => response.json())
-                        .then((responseJson) => {
-                            ToastAndroid.show(responseJson.status, ToastAndroid.LONG)
-                        })
-                        .catch((error) => {
-                            ToastAndroid.show(error.toString(), ToastAndroid.LONG)
-                            console.error(error);
-                        });
-                }, (code, message) => {
-                    ToastAndroid.show(message, ToastAndroid.LONG)
-                })}/>
+                <Button title="扫一扫提交" onPress={() => this.submitInfo()}/>
             </View>
         </View>);
 

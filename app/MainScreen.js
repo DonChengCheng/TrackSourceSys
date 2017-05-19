@@ -27,7 +27,7 @@ export default class MainScreen extends Component {
                 <View style={{margin:40}}>
                     <Button
                         onPress={() => navigate('User')}
-                        title={"我是职员"}>
+                        title={"我是用户"}>
                     </Button>
                 </View>
 

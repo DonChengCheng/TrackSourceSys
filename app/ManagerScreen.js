@@ -50,6 +50,7 @@ export default class ManagerScreen extends Component {
     }
 
     render() {
+        const { navigate } = this.props.navigation;
         if (this.state.loading) {
             return (<View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
                 <ActivityIndicator
@@ -62,7 +63,8 @@ export default class ManagerScreen extends Component {
             if (this.state.managerInfo != null) {
                 return (<View style={styles.container}>
                     {this.state.managerInfo.map((item) => this._renderManagerInfo(item))}
-                    <Button title={"添加职员"}></Button>
+                    <Button onPress={navigate('ConfigUserInfo')} title={"添加职员"}></Button>
+                    <Button onPress={navigate('ConfigUserInfo')} title={"查看身份二维码"}></Button>
                 </View>);
             } else {
                 return (<View style={[styles.container, {flex: 1, justifyContent: "center", alignItems: "center"}]}>
