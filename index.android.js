@@ -24,7 +24,6 @@ const App = StackNavigator({
     Manager: {screen: ManagerScreen},
     ConfigManagerInfo: {screen: ConfigManagerInfoScreen},
     ConfigUserInfo: {screen: ConfigUserInfoScreen},
-
 });
 
 AppRegistry.registerComponent('TrackSourceSys', () => App);
