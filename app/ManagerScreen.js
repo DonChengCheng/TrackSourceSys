@@ -6,9 +6,13 @@ import {View, StyleSheet, Button, Text, ActivityIndicator, TouchableOpacity} fro
 import AppStorage from "./AppStorage"
 
 export default class ManagerScreen extends Component {
+
+    static refreshData() {
+        this.getData()
+    }
     static navigationOptions = ({navigation})=>({
         title: '我是管理员',
-        headerRight:<TouchableOpacity onPress={() => navigation.navigate('ConfigManagerInfo')}><Text style={{fontSize:16, marginRight:5}}>配置</Text></TouchableOpacity>
+        headerRight:<TouchableOpacity onPress={() => navigation.navigate('ConfigManagerInfo', {returnData: this.refreshData()})}><Text style={{fontSize:16, marginRight:5}}>配置</Text></TouchableOpacity>
     });
 
     state = {
@@ -16,7 +20,7 @@ export default class ManagerScreen extends Component {
         loading: true
     }
 
-    componentWillMount() {
+    getData() {
         AppStorage.getManagerId()
             .then((id) => {
                 fetch("http://dm.trtos.com/php/json.php", {
@@ -30,17 +34,22 @@ export default class ManagerScreen extends Component {
                         id: id,
                     })
                 })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    this.setState({managerInfo: responseJson, loading: false})
-                })
-                .catch((error) => {
-                    this.setState({loading: false})
-                });
+                    .then((response) => response.json())
+                    .then((responseJson) => {
+                        this.setState({managerInfo: responseJson, loading: false})
+                    })
+                    .catch((error) => {
+                        this.setState({loading: false})
+                    });
             }).catch((error) => {
             this.setState({loading: false})
         });
     }
+    componentWillMount() {
+        this.getData()
+    }
+
+
 
     _renderManagerInfo(item) {
         return (<View style={{flex: 1, flexDirection: "row"}}>

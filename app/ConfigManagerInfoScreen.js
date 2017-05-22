@@ -2,7 +2,7 @@
  * Created by Allen on 2017/5/7.
  */
 import React, {Component} from "react"
-import {View, Text, TextInput, StyleSheet, ToastAndroid, Button} from "react-native"
+import {View, Text, TextInput, StyleSheet, ToastAndroid, Button, Platform} from "react-native"
 import ScannerModule from "../CommonNativeModule"
 import AppStorage from "./AppStorage"
 
@@ -30,8 +30,8 @@ export default class ConfigManagerInfoScreen extends Component {
                 if (index != -1) {
                     id = result.slice(index + 1, result.length)
                 }
-                AppStorage.setManagerId(id)
             }
+
             fetch('http://dm.trtos.com/php/json.php', {
                 method: 'POST',
                 headers: {
@@ -44,13 +44,21 @@ export default class ConfigManagerInfoScreen extends Component {
                     content: content
                 })
             })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    ToastAndroid.show(responseJson.status, ToastAndroid.LONG)
+                .then((response) => response.text())
+                .then((text) => {
+                    if (Platform.OS === 'android') {
+                        text = text.replace(/\r?\n/g, '').replace(/[\u0080-\uFFFF]/g, ''); // If android , I've removed unwanted chars.
+                    }
+                    return text;
+                })
+                .then(response=> {
+                    AppStorage.setManagerId(id);
+                    this.props.navigation.state.params.returnData();
+                    ToastAndroid.show(JSON.parse(response).status, ToastAndroid.LONG)
                 })
                 .catch((error) => {
                     ToastAndroid.show(error.toString(), ToastAndroid.LONG)
-                    console.error(error);
+                    console.warn(error);
                 });
         }, (code, message) => {
             ToastAndroid.show(message, ToastAndroid.LONG)

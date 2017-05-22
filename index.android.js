@@ -5,25 +5,24 @@
  */
 
 import React from 'react';
-import {
-    AppRegistry,
-} from 'react-native';
-import MainScreen from "./app/MainScreen"
-import UserScreen from "./app/UserScreen"
-import ManagerScreen from "./app/ManagerScreen"
-import ConfigManagerInfoScreen from "./app/ConfigManagerInfoScreen"
-import ConfigUserInfoScreen from "./app/ConfigUserInfoScreen"
+import { AppRegistry } from 'react-native';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
-import {
-    StackNavigator,
-} from 'react-navigation';
+import AppReducer from './src/reducers';
+import AppWithNavigationState from './app/AppNavigator';
 
-const App = StackNavigator({
-    Main: {screen: MainScreen},
-    User: {screen: UserScreen},
-    Manager: {screen: ManagerScreen},
-    ConfigManagerInfo: {screen: ConfigManagerInfoScreen},
-    ConfigUserInfo: {screen: ConfigUserInfoScreen},
-});
+class TrackSourceApp extends React.Component {
+    store = createStore(AppReducer);
 
-AppRegistry.registerComponent('TrackSourceSys', () => App);
+    render() {
+        return (
+            <Provider store={this.store}>
+                <AppWithNavigationState />
+            </Provider>
+        );
+    }
+}
+
+AppRegistry.registerComponent('TrackSourceSys', () => TrackSourceApp);
+
