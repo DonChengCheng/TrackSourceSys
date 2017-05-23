@@ -4,7 +4,7 @@
 import React, {Component} from "react"
 import {View, Text, TextInput, Button, Picker, StyleSheet, ToastAndroid} from "react-native"
 import ScannerModule from "../CommonNativeModule"
-import AppStorage from "./AppStorage"
+
 export default class ConfigUserInfoScreen extends Component {
     state = {
         username: "",
@@ -28,7 +28,7 @@ export default class ConfigUserInfoScreen extends Component {
                 if (index != -1) {
                     id = result.slice(index + 1, result.length)
                 }
-                AppStorage.setManagerId(id)
+
             }
             fetch('http://dm.trtos.com/php/json.php', {
                 method: 'POST',

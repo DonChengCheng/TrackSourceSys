@@ -5,7 +5,7 @@ import React, {Component} from "react"
 import {View, Text, TextInput, StyleSheet, ToastAndroid, Button, Platform} from "react-native"
 import ScannerModule from "../CommonNativeModule"
 import {getManagerInfo} from '../app/reducers';
-
+import AppStorage from "./AppStorage"
 export default class ConfigManagerInfoScreen extends Component {
     static navigationOptions = {
         title: '配置管理员信息',
@@ -30,13 +30,19 @@ export default class ConfigManagerInfoScreen extends Component {
                 if (index != -1) {
                     id = result.slice(index + 1, result.length)
                 }
+                console.warn(id + "-----------")
+                AppStorage.setManagerId(id)
+                    .then((result) => {
+                    })
+                    .catch((error) => {
+                    })
             }
 
             fetch('http://dm.trtos.com/php/json.php', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json; charset="utf-8"',
                 },
                 body: JSON.stringify({
                     action: "add",

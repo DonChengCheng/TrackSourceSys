@@ -1,7 +1,7 @@
 import AppStorage from "../AppStorage"
 import {AppNavigator} from '../AppNavigator';
 import {combineReducers} from 'redux';
-
+import {Platform} from 'react-native';
 const initialState = {managerInfo: null, isLoading: true};
 const manager = (state = initialState, action) => {
     switch (action.type) {
@@ -23,10 +23,12 @@ const navReducer = (state, action) => {
 
 
 export function getManagerInfo() {
+    console.log("i run-----------")
     return function (dispatch) {
         dispatch({type: 'FETCH_POSTS_REQUEST'})
         return AppStorage.getManagerId()
             .then((id) => {
+                console.warn(id+"---------id")
                 fetch("http://dm.trtos.com/php/json.php", {
                     method: 'POST',
                     headers: {
@@ -45,8 +47,9 @@ export function getManagerInfo() {
                         }
                         return text;
                     })
-                    .then((response) => response.json())
+                    .then((response) => JSON.parse(response))
                     .then((responseJson) => {
+                        console.warn(responseJson)
                         dispatch({type: "FETCH_POSTS_SUCCESS", result: responseJson})
                     })
                     .catch((error) => {

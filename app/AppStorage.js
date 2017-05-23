@@ -8,6 +8,6 @@ export default class AppStorage {
     }
 
     static async setManagerId(managerId) {
-        await AsyncStorage.set('manager_id', managerId);
+        await AsyncStorage.setItem('manager_id', managerId);
     }
 }
