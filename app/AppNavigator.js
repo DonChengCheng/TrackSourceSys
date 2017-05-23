@@ -7,14 +7,13 @@
  * @flow
  */
 
-import React from 'react';
-import MainScreen from "./app/MainScreen"
-import UserScreen from "./app/UserScreen"
-import ManagerScreen from "./app/ManagerScreen"
-import ConfigManagerInfoScreen from "./app/ConfigManagerInfoScreen"
-import ConfigUserInfoScreen from "./app/ConfigUserInfoScreen"
+import React,{ PropTypes }from 'react';
+import MainScreen from "./MainScreen"
+import UserScreen from "./UserScreen"
+import ManagerScreen from "./ManagerScreen"
+import ConfigManagerInfoScreen from "./ConfigManagerInfoScreen"
+import ConfigUserInfoScreen from "./ConfigUserInfoScreen"
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import {
     addNavigationHelpers, StackNavigator,
 } from 'react-navigation';
@@ -28,14 +27,15 @@ export const AppNavigator = StackNavigator({
 });
 
 
-const AppWithNavigationState = ({ dispatch, nav }) => (
-    <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
+const AppWithNavigationState = ({dispatch, nav }) => (
+    <AppNavigator navigation={addNavigationHelpers({dispatch, state: nav})} />
 );
 
 AppWithNavigationState.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    nav: PropTypes.object.isRequired,
+    nav: PropTypes.object.isRequired
 };
+
 
 const mapStateToProps = state => ({
     nav: state.nav,

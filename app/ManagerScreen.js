@@ -3,52 +3,19 @@
  */
 import React, {Component} from "react"
 import {View, StyleSheet, Button, Text, ActivityIndicator, TouchableOpacity} from "react-native"
-import AppStorage from "./AppStorage"
+import {connect} from 'react-redux';
+import {getManagerInfo} from '../app/reducers';
 
-export default class ManagerScreen extends Component {
-
-    static refreshData() {
-        this.getData()
-    }
-    static navigationOptions = ({navigation})=>({
+class ManagerScreen extends Component {
+    static navigationOptions = ({navigation}) => ({
         title: '我是管理员',
-        headerRight:<TouchableOpacity onPress={() => navigation.navigate('ConfigManagerInfo', {returnData: this.refreshData()})}><Text style={{fontSize:16, marginRight:5}}>配置</Text></TouchableOpacity>
+        headerRight: <TouchableOpacity onPress={() => navigation.navigate('ConfigManagerInfo')}><Text
+            style={{fontSize: 16, marginRight: 5}}>配置</Text></TouchableOpacity>
     });
 
-    state = {
-        managerInfo: null,
-        loading: true
-    }
-
-    getData() {
-        AppStorage.getManagerId()
-            .then((id) => {
-                fetch("http://dm.trtos.com/php/json.php", {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: "get",
-                        id: id,
-                    })
-                })
-                    .then((response) => response.json())
-                    .then((responseJson) => {
-                        this.setState({managerInfo: responseJson, loading: false})
-                    })
-                    .catch((error) => {
-                        this.setState({loading: false})
-                    });
-            }).catch((error) => {
-            this.setState({loading: false})
-        });
-    }
     componentWillMount() {
-        this.getData()
+        this.props.dispatch(getManagerInfo())
     }
-
 
 
     _renderManagerInfo(item) {
@@ -59,8 +26,8 @@ export default class ManagerScreen extends Component {
     }
 
     render() {
-        const { navigate } = this.props.navigation;
-        if (this.state.loading) {
+        const {navigate} = this.props.navigation;
+        if (this.props.isLoading) {
             return (<View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
                 <ActivityIndicator
                     animating={this.state.animating}
@@ -69,15 +36,15 @@ export default class ManagerScreen extends Component {
                 />
             </View>)
         } else {
-            if (this.state.managerInfo != null) {
+            if (this.props.managerInfo != null) {
                 return (<View style={styles.container}>
-                    {this.state.managerInfo.map((item) => this._renderManagerInfo(item))}
+                    {this.props.managerInfo.map((item) => this._renderManagerInfo(item))}
                     <Button onPress={navigate('ConfigUserInfo')} title={"添加职员"}></Button>
                     <Button onPress={navigate('ConfigUserInfo')} title={"查看身份二维码"}></Button>
                 </View>);
             } else {
                 return (<View style={[styles.container, {flex: 1, justifyContent: "center", alignItems: "center"}]}>
-                    <Text style={{color: "black", textAlign:"center", margin:20}}>您还没有配置管理员信息，请点击右上角的按钮配置管理员信息</Text>
+                    <Text style={{color: "black", textAlign: "center", margin: 20}}>您还没有配置管理员信息，请点击右上角的按钮配置管理员信息</Text>
                 </View>)
             }
         }
@@ -97,4 +64,11 @@ const styles = StyleSheet.create({
 
     }
 });
+
+const mapStateToProps = state => ({
+    isLoading: state.isLoading,
+    managerInfo: state.managerInfo
+});
+
+export default connect(mapStateToProps)(ManagerScreen);
 

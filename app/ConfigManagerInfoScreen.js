@@ -4,7 +4,7 @@
 import React, {Component} from "react"
 import {View, Text, TextInput, StyleSheet, ToastAndroid, Button, Platform} from "react-native"
 import ScannerModule from "../CommonNativeModule"
-import AppStorage from "./AppStorage"
+import {getManagerInfo} from '../app/reducers';
 
 export default class ConfigManagerInfoScreen extends Component {
     static navigationOptions = {
@@ -52,8 +52,7 @@ export default class ConfigManagerInfoScreen extends Component {
                     return text;
                 })
                 .then(response=> {
-                    AppStorage.setManagerId(id);
-                    this.props.navigation.state.params.returnData();
+                    this.props.dispatch(getManagerInfo())
                     ToastAndroid.show(JSON.parse(response).status, ToastAndroid.LONG)
                 })
                 .catch((error) => {

@@ -1,57 +1,60 @@
-import { combineReducers } from 'redux';
-import { NavigationActions } from 'react-navigation';
-
+import AppStorage from "../AppStorage"
 import { AppNavigator } from '../AppNavigator';
+import { combineReducers } from 'redux';
 
-// Start with two routes: The Main screen, with the Login screen on top.
-const firstAction = AppNavigator.router.getActionForPathAndParams('Main');
-const tempNavState = AppNavigator.router.getStateForAction(firstAction);
-const secondAction = AppNavigator.router.getActionForPathAndParams('Login');
-const initialNavState = AppNavigator.router.getStateForAction(
-  secondAction,
-  tempNavState
-);
-
-function nav(state = initialNavState, action) {
-  let nextState;
-  switch (action.type) {
-    case 'Login':
-      nextState = AppNavigator.router.getStateForAction(
-        NavigationActions.back(),
-        state
-      );
-      break;
-    case 'Logout':
-      nextState = AppNavigator.router.getStateForAction(
-        NavigationActions.navigate({ routeName: 'Login' }),
-        state
-      );
-      break;
-    default:
-      nextState = AppNavigator.router.getStateForAction(action, state);
-      break;
-  }
-
-  // Simply return the original `state` if `nextState` is null or undefined.
-  return nextState || state;
+const initialState = {managerInfo: null, isLoading: true};
+const manager = (state = initialState, action) => {
+    switch (action.type) {
+        case "FETCH_POSTS_REQUEST":
+            return {...state, isLoading: true};
+        case "FETCH_POSTS_FAILURE":
+            return {...state, isLoading: false};
+        case "FETCH_POSTS_SUCCESS":
+            return {...state, isLoading: false, managerInfo: action.result}
+        default:
+            return state;
+    }
 }
 
-const initialAuthState = { isLoggedIn: false };
+const navReducer = (state, action) => {
+    const newState = AppNavigator.router.getStateForAction(action, state);
+    return newState || state;
+};
 
-function auth(state = initialAuthState, action) {
-  switch (action.type) {
-    case 'Login':
-      return { ...state, isLoggedIn: true };
-    case 'Logout':
-      return { ...state, isLoggedIn: false };
-    default:
-      return state;
-  }
+
+export function getManagerInfo() {
+    return function (dispatch) {
+        dispatch({type: 'FETCH_POSTS_REQUEST'})
+        return AppStorage.getManagerId()
+            .then((id) => {
+                fetch("http://dm.trtos.com/php/json.php", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: "get",
+                        id: id,
+                    })
+                })
+                    .then((response) => response.json())
+                    .then((responseJson) => {
+                        dispatch({type: "FETCH_POSTS_SUCCESS", result: responseJson})
+                    })
+                    .catch((error) => {
+                        dispatch({type: "FETCH_POSTS_FAILURE"})
+                    });
+            }).catch((error) => {
+                dispatch({type: "FETCH_POSTS_FAILURE"})
+            })
+    }
 }
-
-const AppReducer = combineReducers({
-  nav,
-  auth,
+const appReducer = combineReducers({
+    nav: navReducer,
+    manager
 });
 
-export default AppReducer;
+export default appReducer
+
+
