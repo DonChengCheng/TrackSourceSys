@@ -14,7 +14,7 @@ class ManagerScreen extends Component {
     });
 
     componentWillMount() {
-        this.props.dispatch(getManagerInfo())
+        this.props.navigation.dispatch(getManagerInfo())
     }
 
 

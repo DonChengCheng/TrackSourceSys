@@ -52,7 +52,7 @@ export default class ConfigManagerInfoScreen extends Component {
                     return text;
                 })
                 .then(response=> {
-                    this.props.dispatch(getManagerInfo())
+                    this.props.navigation.dispatch(getManagerInfo())
                     ToastAndroid.show(JSON.parse(response).status, ToastAndroid.LONG)
                 })
                 .catch((error) => {

@@ -1,6 +1,6 @@
 import AppStorage from "../AppStorage"
-import { AppNavigator } from '../AppNavigator';
-import { combineReducers } from 'redux';
+import {AppNavigator} from '../AppNavigator';
+import {combineReducers} from 'redux';
 
 const initialState = {managerInfo: null, isLoading: true};
 const manager = (state = initialState, action) => {
@@ -38,6 +38,13 @@ export function getManagerInfo() {
                         id: id,
                     })
                 })
+                    .then((response) => response.text())
+                    .then((text) => {
+                        if (Platform.OS === 'android') {
+                            text = text.replace(/\r?\n/g, '').replace(/[\u0080-\uFFFF]/g, ''); // If android , I've removed unwanted chars.
+                        }
+                        return text;
+                    })
                     .then((response) => response.json())
                     .then((responseJson) => {
                         dispatch({type: "FETCH_POSTS_SUCCESS", result: responseJson})
