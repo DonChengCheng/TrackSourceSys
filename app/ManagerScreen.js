@@ -4,7 +4,7 @@
 import React, {Component, PropTypes} from "react"
 import {View, StyleSheet, Button, Text, ActivityIndicator, TouchableOpacity, ScrollView} from "react-native"
 import {connect} from 'react-redux';
-import {getManagerInfo} from '../app/reducers';
+import {getManagerInfo} from './Net';
 import ScannerModule from "../CommonNativeModule";
 import AppStorage from "./AppStorage"
 
