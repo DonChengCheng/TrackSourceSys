@@ -48,7 +48,6 @@ export default class ConfigUserInfoScreen extends Component {
                 })
                 .catch((error) => {
                     ToastAndroid.show(error.toString(), ToastAndroid.LONG)
-                    console.error(error);
                 });
         }, (code, message) => {
             ToastAndroid.show(message, ToastAndroid.LONG)

@@ -23,12 +23,10 @@ const navReducer = (state, action) => {
 
 
 export function getManagerInfo() {
-    console.log("i run-----------")
     return function (dispatch) {
         dispatch({type: 'FETCH_POSTS_REQUEST'})
         return AppStorage.getManagerId()
             .then((id) => {
-                console.warn(id+"---------id")
                 fetch("http://dm.trtos.com/php/json.php", {
                     method: 'POST',
                     headers: {
@@ -40,16 +38,8 @@ export function getManagerInfo() {
                         id: id,
                     })
                 })
-                    .then((response) => response.text())
-                    .then((text) => {
-                        if (Platform.OS === 'android') {
-                            text = text.replace(/\r?\n/g, '').replace(/[\u0080-\uFFFF]/g, ''); // If android , I've removed unwanted chars.
-                        }
-                        return text;
-                    })
-                    .then((response) => JSON.parse(response))
+                    .then((response) => response.json())
                     .then((responseJson) => {
-                        console.warn(responseJson)
                         dispatch({type: "FETCH_POSTS_SUCCESS", result: responseJson})
                     })
                     .catch((error) => {
