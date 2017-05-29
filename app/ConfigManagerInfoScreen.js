@@ -18,57 +18,36 @@ export default class ConfigManagerInfoScreen extends Component {
     }
 
     submitInfo() {
-        ScannerModule.scannerErcode().then((result) => {
-            let content = [{"name": "姓名", "value": this.state.username}, {
-                "name": "性别",
-                "value": this.state.sex
-            },
-                {"name": "电话号码", "value": this.state.mobile}]
-            let id = "";
-            if (result != "") {
-                let index = result.indexOf("=", 0);
-                if (index != -1) {
-                    id = result.slice(index + 1, result.length)
-                }
-                console.warn(id + "-----------")
-                AppStorage.setManagerId(id)
-                    .then((result) => {
+        let content = [{"name": "姓名", "value": this.state.username}, {
+            "name": "性别",
+            "value": this.state.sex
+        },
+            {"name": "电话号码", "value": this.state.mobile}];
+        AppStorage.getManagerId()
+            .then(((id) => {
+                fetch('http://dm.trtos.com/php/dm.php', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json; charset="utf-8"',
+                    },
+                    body: JSON.stringify({
+                        action: "add",
+                        id: id,
+                        content: content
+                    })
+                })
+                    .then((response) => response.json())
+                    .then(response => {
+                        this.props.navigation.dispatch(getManagerInfo())
+                        ToastAndroid.show(JSON.parse(response).msg, ToastAndroid.LONG)
                     })
                     .catch((error) => {
-                    })
-            }
-
-            fetch('http://dm.trtos.com/php/json.php', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json; charset="utf-8"',
-                },
-                body: JSON.stringify({
-                    action: "add",
-                    id: id,
-                    content: content
-                })
-            })
-                .then((response) => response.text())
-                .then((text) => {
-                    if (Platform.OS === 'android') {
-                        text = text.replace(/\r?\n/g, '').replace(/[\u0080-\uFFFF]/g, ''); // If android , I've removed unwanted chars.
-                    }
-                    return text;
-                })
-                .then(response=> {
-                    this.props.navigation.dispatch(getManagerInfo())
-                    ToastAndroid.show(JSON.parse(response).status, ToastAndroid.LONG)
-                })
-                .catch((error) => {
-                    ToastAndroid.show(error.toString(), ToastAndroid.LONG)
-                    console.warn(error);
-                });
-        }, (code, message) => {
-            ToastAndroid.show(message, ToastAndroid.LONG)
-        })
+                        ToastAndroid.show(error.toString(), ToastAndroid.LONG)
+                    });
+            }))
     }
+
     render() {
         return (<View style={styles.container}>
             <View style={styles.itemStyle}>
@@ -84,7 +63,7 @@ export default class ConfigManagerInfoScreen extends Component {
                 <TextInput onChangeText={(text) => this.setState({mobile: text})} style={{flex: 1}}></TextInput>
             </View>
             <View style={{margin: 10}}>
-                <Button title="扫一扫提交" onPress={() => this.submitInfo()}/>
+                <Button title="提交" onPress={() => this.submitInfo()}/>
             </View>
         </View>);
 

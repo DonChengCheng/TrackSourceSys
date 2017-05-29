@@ -12,7 +12,7 @@ import MainScreen from "./MainScreen"
 import UserScreen from "./UserScreen"
 import ManagerScreen from "./ManagerScreen"
 import ConfigManagerInfoScreen from "./ConfigManagerInfoScreen"
-import ConfigUserInfoScreen from "./ConfigUserInfoScreen"
+import ConfigUserInfoScreen from "./ConfigStaffInfoScreen"
 import { connect } from 'react-redux';
 import {
     addNavigationHelpers, StackNavigator,

@@ -2,8 +2,8 @@
 import {AppNavigator} from '../AppNavigator';
 import {combineReducers} from 'redux';
 
-const initialState = {managerInfo: null, isLoading: true};
-const manager = (state = initialState, action) => {
+const initialManagerState = {managerInfo: null, isLoading: true};
+const managerReducer = (state = initialManagerState, action) => {
     switch (action.type) {
         case "FETCH_POSTS_REQUEST":
             return {...state, isLoading: true};
@@ -21,11 +21,24 @@ const navReducer = (state, action) => {
     return newState || state;
 };
 
-
+const initialStaffState = {staffInfo: null, isLoading: true};
+const staffReducer = (state = initialStaffState, action) => {
+    switch (action.type) {
+        case "FETCH_STAFF_REQUEST":
+            return {...state, isLoading: true};
+        case "FETCH_STAFF_FAILURE":
+            return {...state, isLoading: false};
+        case "FETCH_STAFF_SUCCESS":
+            return {...state, isLoading: false, staffInfo: action.result}
+        default:
+            return state;
+    }
+}
 
 const appReducer = combineReducers({
     nav: navReducer,
-    manager
+    manager:managerReducer,
+    staff:staffReducer
 });
 
 export default appReducer

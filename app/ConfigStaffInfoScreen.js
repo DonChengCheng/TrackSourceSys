@@ -16,21 +16,19 @@ export default class ConfigUserInfoScreen extends Component {
         title: '添加职员信息'
     }
 
+    componentDidMount() {
+        this.props.navigation.dispatch(getUniqueKey((id)=>{
+            AppStorage.setStaffId(id)
+        }))
+    }
+
     submitInfo() {
-        ScannerModule.scannerErcode().then((result) => {
+        AppStorage.getStaffId().then((id)=>{
             let content = [{"name": "姓名", "value": this.state.username}, {
                 "name": "性别",
                 "value": this.state.sex
             }, {"name": "职位", "value": this.state.type}]
-            let id = "";
-            if (result != "") {
-                let index = result.indexOf("=", 0);
-                if (index != -1) {
-                    id = result.slice(index + 1, result.length)
-                }
-
-            }
-            fetch('http://dm.trtos.com/php/json.php', {
+            fetch('http://dm.trtos.com/php/dm.php', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -49,9 +47,8 @@ export default class ConfigUserInfoScreen extends Component {
                 .catch((error) => {
                     ToastAndroid.show(error.toString(), ToastAndroid.LONG)
                 });
-        }, (code, message) => {
-            ToastAndroid.show(message, ToastAndroid.LONG)
         })
+
     }
 
     render() {
@@ -75,7 +72,7 @@ export default class ConfigUserInfoScreen extends Component {
                 </Picker>
             </View>
             <View style={{margin: 10}}>
-                <Button title={"扫一扫添加"} onPress={() => this.submitInfo()}></Button>
+                <Button title={"添加"} onPress={() => this.submitInfo()}></Button>
             </View>
         </View>);
     }
