@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "flow": "flow"
   },
   "dependencies": {
     "prop-types": "^15.5.10",
     "react": "16.0.0-alpha.6",
     "react-native": "^0.44.0",
-    "react-navigation": "^1.0.0-beta.9",
+    "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.5",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0"
@@ -18,6 +19,7 @@
   "devDependencies": {
     "babel-jest": "19.0.0",
     "babel-preset-react-native": "1.9.1",
+    "flow-bin": "^0.42.0",
     "jest": "19.0.2",
     "react-test-renderer": "16.0.0-alpha.6",
     "redux-logger": "^3.0.6"
