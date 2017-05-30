@@ -4,7 +4,7 @@
 import React, {Component} from "react"
 import {View, Text, TextInput, Button, Picker, StyleSheet, ToastAndroid} from "react-native"
 import ScannerModule from "../CommonNativeModule"
-
+import {submitStaffInfo, getUniqueKey} from "./Net"
 export default class ConfigUserInfoScreen extends Component {
     state = {
         username: "",
@@ -23,32 +23,11 @@ export default class ConfigUserInfoScreen extends Component {
     }
 
     submitInfo() {
-        AppStorage.getStaffId().then((id)=>{
-            let content = [{"name": "姓名", "value": this.state.username}, {
-                "name": "性别",
-                "value": this.state.sex
-            }, {"name": "职位", "value": this.state.type}]
-            fetch('http://dm.trtos.com/php/dm.php', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: "add",
-                    id: id,
-                    content: content
-                })
-            })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    ToastAndroid.show(responseJson.status, ToastAndroid.LONG)
-                })
-                .catch((error) => {
-                    ToastAndroid.show(error.toString(), ToastAndroid.LONG)
-                });
-        })
-
+        let content = [{"name": "姓名", "value": this.state.username}, {
+            "name": "性别",
+            "value": this.state.sex
+        }, {"name": "职位", "value": this.state.type}]
+        this.props.navigation.dispatch(submitStaffInfo(content))
     }
 
     render() {

@@ -20,8 +20,8 @@ class ManagerScreen extends Component {
     }
 
 
-    _renderManagerInfo(item) {
-        return (<View style={{flex: 1, flexDirection: "row", alignItems: "center", marginTop: 10}}>
+    _renderManagerInfo(item,index) {
+        return (<View key={index} style={{flex: 1, flexDirection: "row", alignItems: "center", marginTop: 10}}>
             <Text style={{color: "grey", marginLeft: 5, fontSize: 18}}>{item.Name}:</Text>
             <Text style={{color: "black", marginLeft: 10, fontSize: 18}}>{item.Value}</Text>
         </View>)

@@ -4,8 +4,9 @@
 import React, {Component} from "react"
 import {View, Text, TextInput, StyleSheet, ToastAndroid, Button, Platform} from "react-native"
 import ScannerModule from "../CommonNativeModule"
-import {getManagerInfo} from '../app/reducers';
+
 import AppStorage from "./AppStorage"
+import {submitManagerInfo} from "./Net"
 export default class ConfigManagerInfoScreen extends Component {
     static navigationOptions = {
         title: '配置管理员信息',
@@ -23,29 +24,7 @@ export default class ConfigManagerInfoScreen extends Component {
             "value": this.state.sex
         },
             {"name": "电话号码", "value": this.state.mobile}];
-        AppStorage.getManagerId()
-            .then(((id) => {
-                fetch('http://dm.trtos.com/php/dm.php', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json; charset="utf-8"',
-                    },
-                    body: JSON.stringify({
-                        action: "add",
-                        id: id,
-                        content: content
-                    })
-                })
-                    .then((response) => response.json())
-                    .then(response => {
-                        this.props.navigation.dispatch(getManagerInfo())
-                        ToastAndroid.show(JSON.parse(response).msg, ToastAndroid.LONG)
-                    })
-                    .catch((error) => {
-                        ToastAndroid.show(error.toString(), ToastAndroid.LONG)
-                    });
-            }))
+        this.props.navigation.dispatch(submitManagerInfo(content))
     }
 
     render() {
