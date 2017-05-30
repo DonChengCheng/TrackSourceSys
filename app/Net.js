@@ -3,7 +3,7 @@
  */
 
 import AppStorage from "./AppStorage"
-
+import { NavigationActions } from 'react-navigation'
 export function getManagerInfo() {
     return function (dispatch) {
         dispatch({type: 'FETCH_POSTS_REQUEST'})
@@ -105,7 +105,12 @@ export function submitStaffInfo(content) {
                     .then((response) => response.json())
                     .then((responseJson) => {
                         if (responseJson.ret == 0) {
+
                             dispatch({type: "FETCH_STAFF_SUCCESS", msg: responseJson.msg})
+                            const backAction = NavigationActions.back({
+                                key: 'Profile'
+                            })
+                            dispatch(backAction)
                         } else {
                             dispatch({type: "FETCH_STAFF_FAILURE", msg: responseJson.msg})
                         }
