@@ -2,9 +2,10 @@
  * Created by hasee on 2017/5/7.
  */
 import React, {Component} from "react"
-import {View, Text, TextInput, Button, Picker, StyleSheet, ToastAndroid} from "react-native"
-import ScannerModule from "../CommonNativeModule"
+import {View, Text, TextInput, Button, Picker, StyleSheet} from "react-native"
+import AppStorage from "./AppStorage"
 import {submitStaffInfo, getUniqueKey} from "./Net"
+
 export default class ConfigUserInfoScreen extends Component {
     state = {
         username: "",

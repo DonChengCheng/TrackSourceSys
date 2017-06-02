@@ -3,7 +3,7 @@
  */
 
 import AppStorage from "./AppStorage"
-import { NavigationActions } from 'react-navigation'
+
 export function getManagerInfo() {
     return function (dispatch) {
         dispatch({type: 'FETCH_POSTS_REQUEST'})
@@ -65,14 +65,14 @@ export function submitManagerInfo(content) {
                     .then((response) => response.json())
                     .then((responseJson) => {
                         if (responseJson.ret == 0) {
-                            dispatch({type: "FETCH_STAFF_SUCCESS", msg: responseJson.msg})
+                            dispatch({type: "SUBMIT_MANAGER_INFO_SUCCESS", msg: responseJson.msg})
                         } else {
-                            dispatch({type: "FETCH_STAFF_FAILURE", msg: responseJson.msg})
+                            dispatch({type: "SUBMIT_MANAGER_INFO_SUCCESS", msg: responseJson.msg})
                         }
 
                     })
                     .catch((error) => {
-                        dispatch({type: "FETCH_POSTS_FAILURE", msg: "网络异常"})
+                        dispatch({type: "SUBMIT_MANAGER_INFO_FAILURE", msg: "网络异常"})
                     });
             }).catch((error) => {
 
@@ -104,13 +104,10 @@ export function submitStaffInfo(content) {
                 })
                     .then((response) => response.json())
                     .then((responseJson) => {
+                         console.warn(JSON.stringify(responseJson))
                         if (responseJson.ret == 0) {
-
-                            dispatch({type: "FETCH_STAFF_SUCCESS", msg: responseJson.msg})
-                            const backAction = NavigationActions.back({
-                                key: 'Profile'
-                            })
-                            dispatch(backAction)
+                            let content = [{"name": "职员", "value": id}]
+                            dispatch(submitManagerInfo(content))
                         } else {
                             dispatch({type: "FETCH_STAFF_FAILURE", msg: responseJson.msg})
                         }
@@ -126,7 +123,8 @@ export function submitStaffInfo(content) {
 }
 
 
-export function getUniqueKey(successCallbak) {
+export function getUniqueKey(successCallback) {
+    console.warn("getUniqueKey run-----");
     return function (dispatch) {
         return fetch("http://dm.trtos.com/php/dm.php", {
             method: 'POST',
@@ -140,8 +138,9 @@ export function getUniqueKey(successCallbak) {
         })
             .then((response) => response.json())
             .then((responseJson) => {
+                console.warn(JSON.stringify(responseJson)+"--------")
                 dispatch({type: "FETCH_POSTS_SUCCESS", result: null})
-                successCallbak(responseJson.data.id)
+                successCallback(responseJson.data.id)
             })
             .catch((error) => {
                 dispatch({type: "FETCH_POSTS_FAILURE", msg: "网络异常"})

@@ -11,6 +11,10 @@ const managerReducer = (state = initialManagerState, action) => {
             return {...state, isLoading: false};
         case "FETCH_POSTS_SUCCESS":
             return {...state, isLoading: false, managerInfo: action.result}
+        case "SUBMIT_MANAGER_INFO_SUCCESS":
+            return {...state, msg: action.msg, isLoading: false}
+        case "SUBMIT_MANAGER_INFO_FAILURE":
+            return {...state, msg: action.msg, isLoading: false}
         default:
             return state;
     }

@@ -55,7 +55,7 @@ class ManagerScreen extends Component {
                                 }} title={"查看身份二维码"}></Button>
                             </View>
                         </View>
-                        {this.props.managerInfo.map((item) => this._renderManagerInfo(item))}
+                        {this.props.managerInfo.map((item, index) => this._renderManagerInfo(item, index))}
                     </ScrollView>);
             } else {
                 return (<View style={[styles.container, {flex: 1, justifyContent: "center", alignItems: "center"}]}>
