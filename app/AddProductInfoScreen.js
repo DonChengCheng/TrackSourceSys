@@ -19,9 +19,9 @@ export default class AddProductInfoScreen extends Component {
                             selectedValue={this.state.appraise}
                             onValueChange={(appraise) => this.setState({appraise: appraise})}>
                         <Picker.Item label="优" value="优" />
-                        <Picker.Item label="良" value="优" />
-                        <Picker.Item label="中" value="优" />
-                        <Picker.Item label="差" value="优" />
+                        <Picker.Item label="良" value="良" />
+                        <Picker.Item label="中" value="中" />
+                        <Picker.Item label="差" value="差" />
                     </Picker>
                 </View>
 

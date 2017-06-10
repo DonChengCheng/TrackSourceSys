@@ -31,9 +31,9 @@ const staffReducer = (state = initialStaffState, action) => {
         case "FETCH_STAFF_REQUEST":
             return {...state, isLoading: true};
         case "FETCH_STAFF_FAILURE":
-            return {...state, isLoading: false};
+            return {...state, isLoading: false, msg:action.msg};
         case "FETCH_STAFF_SUCCESS":
-            return {...state, isLoading: false, staffInfo: action.result}
+            return {...state, isLoading: false, msg:action.msg}
         default:
             return state;
     }

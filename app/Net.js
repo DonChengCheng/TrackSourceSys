@@ -65,7 +65,7 @@ export function submitManagerInfo(content) {
                     .then((response) => response.json())
                     .then((responseJson) => {
                         if (responseJson.ret == 0) {
-                            dispatch({type: "SUBMIT_MANAGER_INFO_SUCCESS", msg: responseJson.msg})
+                            dispatch(getManagerInfo())
                         } else {
                             dispatch({type: "SUBMIT_MANAGER_INFO_SUCCESS", msg: responseJson.msg})
                         }
@@ -85,7 +85,7 @@ export function submitManagerInfo(content) {
  * @param content 职员信息
  * @returns {Function}
  */
-export function submitStaffInfo(content) {
+export function submitStaffInfo(content, successCallback) {
     return function (dispatch) {
         dispatch({type: 'FETCH_STAFF_REQUEST'})
         return AppStorage.getStaffId()
@@ -104,10 +104,10 @@ export function submitStaffInfo(content) {
                 })
                     .then((response) => response.json())
                     .then((responseJson) => {
-                         console.warn(JSON.stringify(responseJson))
                         if (responseJson.ret == 0) {
-                            let content = [{"name": "职员", "value": id}]
-                            dispatch(submitManagerInfo(content))
+                            let managerContent = [{"name": "职员", "value": id}]
+                            dispatch(submitManagerInfo(managerContent))
+                            successCallback(responseJson.msg)
                         } else {
                             dispatch({type: "FETCH_STAFF_FAILURE", msg: responseJson.msg})
                         }
@@ -124,7 +124,6 @@ export function submitStaffInfo(content) {
 
 
 export function getUniqueKey(successCallback) {
-    console.warn("getUniqueKey run-----");
     return function (dispatch) {
         return fetch("http://dm.trtos.com/php/dm.php", {
             method: 'POST',
@@ -138,8 +137,6 @@ export function getUniqueKey(successCallback) {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                console.warn(JSON.stringify(responseJson)+"--------")
-                dispatch({type: "FETCH_POSTS_SUCCESS", result: null})
                 successCallback(responseJson.data.id)
             })
             .catch((error) => {

@@ -4,8 +4,9 @@
 import React, {Component} from "react"
 import {View, Text, TextInput, Button, Picker, StyleSheet} from "react-native"
 import AppStorage from "./AppStorage"
-import {submitStaffInfo, getUniqueKey} from "./Net"
-
+import {submitStaffInfo, getUniqueKey, submitManagerInfo} from "./Net"
+import Toast, {DURATION} from 'react-native-easy-toast'
+import { connect } from 'react-redux';
 export default class ConfigUserInfoScreen extends Component {
     state = {
         username: "",
@@ -28,7 +29,9 @@ export default class ConfigUserInfoScreen extends Component {
             "name": "性别",
             "value": this.state.sex
         }, {"name": "职位", "value": this.state.type}]
-        this.props.navigation.dispatch(submitStaffInfo(content))
+        this.props.navigation.dispatch(submitStaffInfo(content, (msg)=>{
+            this.refs.toast.show(msg);
+        }))
     }
 
     render() {
@@ -54,6 +57,7 @@ export default class ConfigUserInfoScreen extends Component {
             <View style={{margin: 10}}>
                 <Button title={"添加"} onPress={() => this.submitInfo()}></Button>
             </View>
+            <Toast ref="toast"/>
         </View>);
     }
 }
