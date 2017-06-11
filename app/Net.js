@@ -33,7 +33,7 @@ export function getManagerInfo() {
                         dispatch({type: "FETCH_POSTS_FAILURE", msg: "网络异常"})
                     });
             }).catch((error) => {
-                dispatch(getUniqueKey((id)=>{
+                dispatch(getUniqueKey((id) => {
                     AppStorage.setManagerId(id)
                 }))
             })
@@ -144,4 +144,24 @@ export function getUniqueKey(successCallback) {
             });
     }
 
+}
+
+export function getStaffInfo(id) {
+    return function (dispatch) {
+        return fetch("http://dm.trtos.com/php/dm.php", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                action: "get",
+                id: id
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                  console.warn(JSON.stringify(responseJson))
+            })
+    }
 }

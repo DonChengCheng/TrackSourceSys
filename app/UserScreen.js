@@ -5,16 +5,17 @@
 import React, {Component} from "react";
 import {View, Text, ToastAndroid, StyleSheet, TouchableOpacity} from "react-native"
 import ScannerModule from "../CommonNativeModule"
+import {getStaffInfo} from "./Net"
 
 export default class UserScreen extends Component {
-    static navigationOptions = {
+    static navigationOptions = ({navigation})=> ({
         title: '我是用户',
         headerRight:<TouchableOpacity onPress={() => ScannerModule.scannerErcode().then((result) => {
-            ToastAndroid.show(result, ToastAndroid.LONG)
+            navigation.dispatch(getStaffInfo(result))
         }, (code, message) => {
             ToastAndroid.show(message, ToastAndroid.LONG)
         })}><Text style={{fontSize:16, marginRight:5}}>扫一扫</Text></TouchableOpacity>
-    };
+    });
     render() {
         return (<View style={[styles.container, {flex: 1, justifyContent: "center", alignItems: "center"}]}>
             <Text style={{color: "black", textAlign:"center", margin:20}}>如果您是普通用户，可以直接扫一扫；
