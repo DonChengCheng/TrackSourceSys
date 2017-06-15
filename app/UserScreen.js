@@ -4,8 +4,8 @@
 
 import React, {Component} from "react";
 import {View, Text, ToastAndroid, StyleSheet, TouchableOpacity} from "react-native"
-import ScannerModule from "../CommonNativeModule"
-import {getStaffInfo} from "./Net"
+import ScannerModule from "../CommonNativeModule";
+import {getStaffInfo} from "./Net";
 
 export default class UserScreen extends Component {
     static navigationOptions = ({navigation})=> ({

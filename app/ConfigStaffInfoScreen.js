@@ -6,7 +6,8 @@ import {View, Text, TextInput, Button, Picker, StyleSheet} from "react-native"
 import AppStorage from "./AppStorage"
 import {submitStaffInfo, getUniqueKey, submitManagerInfo} from "./Net"
 import Toast, {DURATION} from 'react-native-easy-toast'
-import { connect } from 'react-redux';
+
+
 export default class ConfigUserInfoScreen extends Component {
     state = {
         username: "",

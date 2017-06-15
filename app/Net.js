@@ -9,29 +9,15 @@ export function getManagerInfo() {
         dispatch({type: 'FETCH_POSTS_REQUEST'})
         return AppStorage.getManagerId()
             .then((id) => {
-                fetch("http://dm.trtos.com/php/dm.php", {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: "get",
-                        id: id,
-                    })
+                getInfo(id, (json) => {
+                    if (json.ret == 0) {
+                        dispatch({type: "FETCH_POSTS_SUCCESS", result: json.data})
+                    } else {
+                        dispatch({type: "FETCH_POSTS_FAILURE", msg: json.msg})
+                    }
+                }, (error) => {
+                    dispatch({type: "FETCH_POSTS_FAILURE", msg: "网络异常"})
                 })
-                    .then((response) => response.json())
-                    .then((responseJson) => {
-                        if (responseJson.ret == 0) {
-                            dispatch({type: "FETCH_POSTS_SUCCESS", result: responseJson.data})
-                        } else {
-                            dispatch({type: "FETCH_POSTS_FAILURE", msg: responseJson.msg})
-                        }
-
-                    })
-                    .catch((error) => {
-                        dispatch({type: "FETCH_POSTS_FAILURE", msg: "网络异常"})
-                    });
             }).catch((error) => {
                 dispatch(getUniqueKey((id) => {
                     AppStorage.setManagerId(id)
@@ -40,6 +26,27 @@ export function getManagerInfo() {
     }
 }
 
+
+export function getInfo(id, successCallback, failCallback) {
+    fetch("http://dm.trtos.com/php/dm.php", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            action: "get",
+            id: id,
+        })
+    })
+        .then((response) => response.json())
+        .then((responseJson) => {
+            successCallback(responseJson)
+        })
+        .catch((error) => {
+            failCallback(error)
+        });
+}
 
 /**
  * 提交管理员信息
@@ -161,7 +168,7 @@ export function getStaffInfo(id) {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                  console.warn(JSON.stringify(responseJson))
+                console.warn(JSON.stringify(responseJson))
             })
     }
 }
