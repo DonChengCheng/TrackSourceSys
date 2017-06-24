@@ -19,4 +19,9 @@ export default class AppStorage {
     static async setStaffId(staffId) {
         await AsyncStorage.setItem('staff_id', staffId);
     }
+
+    static async setIdentifyInfo(identifyInfo) {
+        await AsyncStorage.setItem('identify_info', identifyInfo);
+    }
+
 }

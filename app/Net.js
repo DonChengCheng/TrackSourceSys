@@ -153,7 +153,7 @@ export function getUniqueKey(successCallback) {
 
 }
 
-export function getStaffInfo(id) {
+export function getStaffInfo(id, successCallback) {
     return function (dispatch) {
         return fetch("http://dm.trtos.com/php/dm.php", {
             method: "POST",
@@ -168,7 +168,8 @@ export function getStaffInfo(id) {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                console.warn(JSON.stringify(responseJson))
+                successCallback(responseJson)
+                // console.warn(JSON.stringify(responseJson))
             })
     }
 }

@@ -2,10 +2,7 @@
  * Created by Allen on 2017/5/7.
  */
 import React, {Component} from "react"
-import {View, Text, TextInput, StyleSheet, ToastAndroid, Button, Platform} from "react-native"
-import ScannerModule from "../CommonNativeModule"
-
-import AppStorage from "./AppStorage"
+import {View, Text, TextInput, StyleSheet, Button} from "react-native"
 import {submitManagerInfo} from "./Net"
 export default class ConfigManagerInfoScreen extends Component {
     static navigationOptions = {

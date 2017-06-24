@@ -6,12 +6,20 @@ import React, {Component} from "react";
 import {View, Text, ToastAndroid, StyleSheet, TouchableOpacity} from "react-native"
 import ScannerModule from "../CommonNativeModule";
 import {getStaffInfo} from "./Net";
+import AppStorage from "./AppStorage"
 
 export default class UserScreen extends Component {
     static navigationOptions = ({navigation})=> ({
         title: '我是用户',
         headerRight:<TouchableOpacity onPress={() => ScannerModule.scannerErcode().then((result) => {
-            navigation.dispatch(getStaffInfo(result))
+            navigation.dispatch(getStaffInfo(result, (result)=>{
+                result.map((item)=>{
+                    if(item.Name === "职位") {
+                        AppStorage.setIdentifyInfo(item.Value)
+                    }
+                });
+
+            }))
         }, (code, message) => {
             ToastAndroid.show(message, ToastAndroid.LONG)
         })}><Text style={{fontSize:16, marginRight:5}}>扫一扫</Text></TouchableOpacity>

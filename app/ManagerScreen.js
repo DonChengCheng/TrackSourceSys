@@ -1,8 +1,9 @@
 /**
  * Created by hasee on 2017/5/5.
  */
-import React, {Component, PropTypes} from "react"
-import {View, StyleSheet, Button, Text, ActivityIndicator, TouchableOpacity, ScrollView} from "react-native"
+import React, {Component} from "react";
+import PropTypes from 'prop-types';
+import {View, StyleSheet, Button, Text, ActivityIndicator, TouchableOpacity, ScrollView} from "react-native";
 import {connect} from 'react-redux';
 import {getManagerInfo} from './Net';
 import ScannerModule from "../CommonNativeModule";
