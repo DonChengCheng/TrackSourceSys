@@ -27,6 +27,7 @@ export default class ConfigManagerInfoScreen extends Component {
     render() {
         return (<View style={styles.container}>
             <View style={styles.itemStyle}>
+
                 <Text style={{width: 60, textAlign: 'right'}}>姓名</Text>
                 <TextInput onChangeText={(text) => this.setState({username: text})} style={{flex: 1}}></TextInput>
             </View>

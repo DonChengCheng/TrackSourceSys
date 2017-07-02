@@ -24,4 +24,7 @@ export default class AppStorage {
         await AsyncStorage.setItem('identify_info', identifyInfo);
     }
 
+    static async getIdentifyInfo() {
+        await AsyncStorage.setItem('identify_info');
+    }
 }

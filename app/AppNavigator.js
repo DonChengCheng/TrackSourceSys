@@ -12,8 +12,9 @@ import PropTypes from 'prop-types';
 import MainScreen from "./MainScreen"
 import UserScreen from "./UserScreen"
 import ManagerScreen from "./ManagerScreen"
-import ConfigManagerInfoScreen from "./ConfigManagerInfoScreen"
-import ConfigUserInfoScreen from "./ConfigStaffInfoScreen"
+import ConfigManagerInfoScreen from './ConfigManagerInfoScreen';
+import ConfigUserInfoScreen from './ConfigStaffInfoScreen';
+import AddProductInfoScreen from './AddProductInfoScreen';
 import { connect } from 'react-redux';
 import {
     addNavigationHelpers, StackNavigator,
@@ -25,6 +26,8 @@ export const AppNavigator = StackNavigator({
     Manager: {screen: ManagerScreen},
     ConfigManagerInfo: {screen: ConfigManagerInfoScreen},
     ConfigUserInfo: {screen: ConfigUserInfoScreen},
+    AddProductInfo: {screen: AddProductInfoScreen},
+
 });
 
 
