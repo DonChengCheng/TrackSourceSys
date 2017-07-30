@@ -7,7 +7,7 @@ import React, {Component} from "react"
  * @since 2017/5/30
  */
 import {View, Text, TextInput, StyleSheet, Button} from "react-native"
-import {submitManagerInfo} from "./Net"
+import {submitManagerInfo} from "./model/Manage"
 export default class ConfigManagerInfoScreen extends Component {
     static navigationOptions = {
         title: '配置管理员信息',

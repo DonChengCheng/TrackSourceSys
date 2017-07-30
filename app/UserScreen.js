@@ -4,11 +4,12 @@
  */
 
 import React, {Component} from "react";
-import {View, Text, ToastAndroid, StyleSheet, TouchableOpacity, Switch, TextInput, Button} from "react-native"
+import {View, Text, ToastAndroid, StyleSheet, TouchableOpacity, Switch } from "react-native"
 import ScannerModule from "../CommonNativeModule";
-import {getStaffInfo, submitUserInfo} from "./Net";
-import AppStorage from "./AppStorage"
+import {submitUserInfo} from "./utils/Net";
+import AppStorage from "./utils/AppStorage"
 import ProductInfoForUser from './component/ProductInfoForUser'
+import {getStaffInfo} from "./model/Staff";
 
 export default class UserScreen extends Component {
     constructor(props) {

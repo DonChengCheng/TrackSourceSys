@@ -4,8 +4,10 @@
  */
 import React, {Component} from "react"
 import {View, Text, TextInput, Button, Picker, StyleSheet} from "react-native"
-import AppStorage from "./AppStorage"
-import {submitStaffInfo, getUniqueKey, submitManagerInfo} from "./Net"
+import AppStorage from "./utils/AppStorage"
+import {getUniqueKey} from "./utils/Net"
+import {submitManagerInfo} from "./model/Manage";
+import {submitStaffInfo} from "./model/Staff";
 
 
 export default class ConfigUserInfoScreen extends Component {

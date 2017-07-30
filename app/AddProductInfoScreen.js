@@ -7,7 +7,7 @@ import React, {Component} from "react"
  * @since 2017/5/30
  */
 import {View, Text, Picker, StyleSheet, TextInput, TouchableOpacity} from "react-native";
-import AppStorage from './AppStorage'
+import AppStorage from './utils/AppStorage'
 
 
 export default class AddProductInfoScreen extends Component {

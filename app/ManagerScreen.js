@@ -6,9 +6,9 @@ import React, {Component} from "react";
 import PropTypes from 'prop-types';
 import {View, StyleSheet, Button, Text, ActivityIndicator, TouchableOpacity, ScrollView} from "react-native";
 import {connect} from 'react-redux';
-import {getManagerInfo} from './Net';
+import {getManagerInfo} from './model/Manage';
 import ScannerModule from "../CommonNativeModule";
-import AppStorage from "./AppStorage"
+import AppStorage from "./utils/AppStorage"
 
 class ManagerScreen extends Component {
     static navigationOptions = ({navigation}) => ({
