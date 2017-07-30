@@ -11,6 +11,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MainScreen from "./MainScreen"
 import UserScreen from "./UserScreen"
+/**
+ * @author dongchengcheng
+ * @since 2017/5/30
+ */
 import ManagerScreen from "./ManagerScreen"
 import ConfigManagerInfoScreen from './ConfigManagerInfoScreen';
 import ConfigUserInfoScreen from './ConfigStaffInfoScreen';

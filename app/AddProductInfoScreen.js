@@ -2,6 +2,10 @@
  * Created by Allen on 2017/5/7.
  */
 import React, {Component} from "react"
+/**
+ * @author dongchengcheng
+ * @since 2017/5/30
+ */
 import {View, Text, Picker, StyleSheet, TextInput, TouchableOpacity} from "react-native";
 import AppStorage from './AppStorage'
 

@@ -1,7 +1,7 @@
 /**
- * Created by hasee on 2017/5/26.
+ * @author dongchengcheng
+ * @since 2017/5/30
  */
-
 import AppStorage from "./AppStorage"
 
 export function getManagerInfo() {

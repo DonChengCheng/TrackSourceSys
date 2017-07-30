@@ -1,5 +1,6 @@
 /**
- * Created by allen on 2017/5/19.
+ * @author dongchengcheng
+ * @since 2017/5/30
  */
 import {AsyncStorage} from "react-native"
 export default class AppStorage {

@@ -2,6 +2,10 @@
  * Created by Allen on 2017/5/7.
  */
 import React, {Component} from "react"
+/**
+ * @author dongchengcheng
+ * @since 2017/5/30
+ */
 import {View, Text, TextInput, StyleSheet, Button} from "react-native"
 import {submitManagerInfo} from "./Net"
 export default class ConfigManagerInfoScreen extends Component {

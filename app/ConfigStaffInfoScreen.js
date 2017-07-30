@@ -1,5 +1,6 @@
 /**
- * Created by hasee on 2017/5/7.
+ * @author dongchengcheng
+ * @since 2017/5/30
  */
 import React, {Component} from "react"
 import {View, Text, TextInput, Button, Picker, StyleSheet} from "react-native"
