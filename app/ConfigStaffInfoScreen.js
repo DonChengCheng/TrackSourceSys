@@ -5,7 +5,6 @@ import React, {Component} from "react"
 import {View, Text, TextInput, Button, Picker, StyleSheet} from "react-native"
 import AppStorage from "./AppStorage"
 import {submitStaffInfo, getUniqueKey, submitManagerInfo} from "./Net"
-import Toast, {DURATION} from 'react-native-easy-toast'
 
 
 export default class ConfigUserInfoScreen extends Component {
@@ -58,7 +57,6 @@ export default class ConfigUserInfoScreen extends Component {
             <View style={{margin: 10}}>
                 <Button title={"添加"} onPress={() => this.submitInfo()}></Button>
             </View>
-            <Toast ref="toast"/>
         </View>);
     }
 }
