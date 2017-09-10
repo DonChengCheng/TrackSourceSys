@@ -4,7 +4,7 @@
  */
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
-import {View, StyleSheet, Button, Text, ActivityIndicator, TouchableOpacity, ScrollView} from "react-native";
+import {View, StyleSheet, Button, Text, ActivityIndicator, TouchableOpacity, ScrollView, Image} from "react-native";
 import {connect} from 'react-redux';
 import {getManagerInfo} from './model/Manage';
 import ScannerModule from "../CommonNativeModule";
@@ -13,8 +13,11 @@ import AppStorage from "./utils/AppStorage"
 class ManagerScreen extends Component {
     static navigationOptions = ({navigation}) => ({
         title: '我是管理员',
-        headerRight: <TouchableOpacity onPress={() => navigation.navigate('ConfigManagerInfo')}><Text
-            style={{fontSize: 16, marginRight: 5}}>配置</Text></TouchableOpacity>
+        headerRight: <TouchableOpacity onPress={() => navigation.navigate('ConfigManagerInfo')}>
+            <Image
+                style={{width: 48, height: 48}}
+                source={require('./images/switch.png')}
+            /></TouchableOpacity>
     });
 
     componentDidMount() {
@@ -22,10 +25,19 @@ class ManagerScreen extends Component {
     }
 
 
-    _renderManagerInfo(item,index) {
-        return (<View key={index} style={{flex: 1, flexDirection: "row", alignItems: "center", marginTop: 10}}>
-            <Text style={{color: "grey", marginLeft: 5, fontSize: 18}}>{item.Name}:</Text>
-            <Text style={{color: "black", marginLeft: 10, fontSize: 18}}>{item.Value}</Text>
+    _renderManagerInfo(item, index) {
+        return (<View key={index} style={{
+            flex: 1,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingTop: 10,
+            paddingBottom: 10,
+            borderBottomWidth: 1,
+            borderBottomColor: 'darkgray'
+        }}>
+            <Text style={{color: "black", marginLeft: 5, fontSize: 18}}>{item.Name}</Text>
+            <Text style={{color: "grey", marginLeft: 10, fontSize: 18}}>{item.Value}</Text>
         </View>)
     }
 
@@ -51,7 +63,7 @@ class ManagerScreen extends Component {
                             </View>
                             <View style={{flex: 1, margin: 8}}>
                                 <Button onPress={() => {
-                                    AppStorage.getManagerId().then((managerId)=> {
+                                    AppStorage.getManagerId().then((managerId) => {
                                         ScannerModule.generateErcode(managerId)
                                     })
                                 }} title={"查看身份二维码"}></Button>
@@ -60,9 +72,20 @@ class ManagerScreen extends Component {
                         {this.props.managerInfo.map((item, index) => this._renderManagerInfo(item, index))}
                     </ScrollView>);
             } else {
-                return (<View style={[styles.container, {flex: 1, justifyContent: "center", alignItems: "center"}]}>
-                    <Text style={{color: "black", textAlign: "center", margin: 20}}>您还没有配置管理员信息，请点击右上角的按钮配置管理员信息</Text>
-                </View>)
+                return (
+                    <View
+                        style={[styles.container, {
+                            flex: 1,
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }]}>
+                        <Text
+                            style={{
+                                color: "black",
+                                textAlign: "center",
+                                margin: 20
+                            }}>您还没有配置管理员信息，请点击右上角的按钮配置管理员信息</Text>
+                    </View>)
             }
         }
 

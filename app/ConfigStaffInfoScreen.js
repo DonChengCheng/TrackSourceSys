@@ -6,14 +6,13 @@ import React, {Component} from "react"
 import {View, Text, TextInput, Button, Picker, StyleSheet} from "react-native"
 import AppStorage from "./utils/AppStorage"
 import {getUniqueKey} from "./utils/Net"
-import {submitManagerInfo} from "./model/Manage";
 import {submitStaffInfo} from "./model/Staff";
 
 
 export default class ConfigUserInfoScreen extends Component {
     state = {
         username: "",
-        sex: "",
+        sex: "男",
         type: "出货员"
     }
 
@@ -43,9 +42,15 @@ export default class ConfigUserInfoScreen extends Component {
                 <Text style={{width: 60, textAlign: 'right'}}>姓名</Text>
                 <TextInput onChangeText={(text) => this.setState({username: text})} style={{flex: 1}}></TextInput>
             </View>
-            <View style={styles.itemStyle}>
+            <View style={[styles.itemStyle]}>
                 <Text style={{width: 60, textAlign: 'right'}}>性别</Text>
-                <TextInput onChangeText={(text) => this.setState({sex: text})} style={{flex: 1}}></TextInput>
+                <Picker style={{flex: 1, borderBottomColor: '#000000', borderBottomWidth: 1}}
+                        mode={Picker.MODE_DROPDOWN}
+                        selectedValue={this.state.sex}
+                        onValueChange={(sex) => this.setState({sex: sex})}>
+                    <Picker.Item label="男" value="男"/>
+                    <Picker.Item label="女" value="女"/>
+                </Picker>
             </View>
             <View style={styles.itemStyle}>
                 <Text style={{width: 60, textAlign: 'right'}}>职位</Text>
